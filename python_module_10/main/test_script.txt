@@ -1,0 +1,145 @@
+
+
+=======ex2========
+
+from scope_mysteries import (
+    mage_counter,
+    spell_accumulator,
+    enchantment_factory,
+    memory_vault,
+)
+
+
+if __name__ == "__main__":
+    print("Testing mage counter...")
+    counter_a = mage_counter()
+    counter_b = mage_counter()
+    print(f"counter_a call 1: {counter_a()}")
+    print(f"counter_a call 2: {counter_a()}")
+    print(f"counter_b call 1: {counter_b()}")
+
+    print("\nTesting spell accumulator...")
+    acc = spell_accumulator(100)
+    print(f"Base 100, add 20: {acc(20)}")
+    print(f"Base 100, add 30: {acc(30)}")
+
+    print("\nTesting enchantment factory...")
+    flame = enchantment_factory("Flaming")
+    frozen = enchantment_factory("Frozen")
+    print(flame("Sword"))
+    print(frozen("Shield"))
+
+    print("\nTesting memory vault...")
+    vault = memory_vault()
+    vault["store"]("secret", 42)
+    print("Store 'secret' = 42")
+    print(f"Recall 'secret': {vault['recall']('secret')}")
+    print(f"Recall 'unknown': {vault['recall']('unknown')}")
+
+
+
+=======ex1========
+
+from higher_magic import (
+    spell_combiner,
+    power_amplifier,
+    conditional_caster,
+    spell_sequence,
+)
+
+
+def fireball(target: str, power: int) -> str:
+    return f"Fireball hits {target}"
+
+
+def heal(target: str, power: int) -> str:
+    return f"Heals {target}"
+
+
+def shield(target: str, power: int) -> str:
+    return f"Shield protects {target} with {power} armor"
+
+
+if __name__ == "__main__":
+    print("Testing spell combiner...")
+    combined = spell_combiner(fireball, heal)
+    result = combined("Dragon", 10)
+    print(f"Combined spell result: {result[0]}, {result[1]}")
+
+    print("\nTesting power amplifier...")
+    mega_fireball = power_amplifier(fireball, 3)
+    original_power = 10
+    amplified = power_amplifier(
+        lambda t, p: p, 3
+    )("Dragon", original_power)
+    print(f"Original: {original_power}, Amplified: {amplified}")
+
+
+
+=======ex4========
+
+import time
+from decorator_mastery import spell_timer, retry_spell, MageGuild
+
+
+if __name__ == "__main__":
+    print("Testing spell timer...")
+
+    @spell_timer
+    def fireball():
+        time.sleep(0.101)
+        return "Fireball cast!"
+
+    result = fireball()
+    print(f"Result: {result}")
+
+    print("\nTesting retrying spell...")
+
+    attempts = [0]
+
+    @retry_spell(3)
+    def unstable_spell():
+        attempts[0] += 1
+        if attempts[0] < 3:
+            raise RuntimeError("Spell unstable!")
+        return "Spell casting failed after 3 attempts"
+
+    print(unstable_spell())
+    print("Waaaaaaagh spelled !")
+
+    print("\nTesting MageGuild...")
+    guild = MageGuild()
+    print(MageGuild.validate_mage_name("Gandalf"))
+    print(MageGuild.validate_mage_name("Al"))
+    print(guild.cast_spell("Lightning", 15))
+    print(guild.cast_spell("Lightning", 5))
+
+=======ex3========
+
+from functools_artifacts import (
+    spell_reducer,
+    memoized_fibonacci,
+    spell_dispatcher,
+)
+
+
+if __name__ == "__main__":
+    print("Testing spell reducer...")
+    print(f"Sum: {spell_reducer([10, 20, 30, 40], 'add')}")
+    print(f"Product: {spell_reducer([10, 20, 30, 40], 'multiply')}")
+    print(f"Max: {spell_reducer([10, 40, 20, 30], 'max')}")
+
+    print("\nTesting memoized fibonacci...")
+    print(f"Fib(0): {memoized_fibonacci(0)}")
+    print(f"Fib(1): {memoized_fibonacci(1)}")
+    print(f"Fib(10): {memoized_fibonacci(10)}")
+    print(f"Fib(15): {memoized_fibonacci(15)}")
+
+    print("\nTesting spell dispatcher...")
+    dispatch = spell_dispatcher()
+    print(dispatch(42))
+    print(dispatch("fireball"))
+    print(dispatch([1, 2, 3]))
+    print(dispatch(3.14))
+
+
